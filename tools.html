@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Study tools — The Consulting Room</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="tools.html">
+  <header class="site-header" id="site-header"></header>
+  <div class="page-hero">
+    <div class="wrap">
+      <div class="eyebrow">Workbooks</div>
+      <h1>Study tools, not diagnostic instruments</h1>
+      <p>Original exercises for reading Freud and Jung from the inside. Nothing here is scored against a clinical norm. Nothing here is a diagnosis.</p>
+    </div>
+  </div>
+  <section>
+    <div class="wrap prose">
+      <div class="warn">If you are in crisis, contact local emergency services or, in the United States, call or text 988. These workbooks are educational.</div>
+
+      <h2>1. Dream worksheet</h2>
+      <p>Write a recent dream in the present tense. Then use both interpretive paths described in <a href="methods.html">Methods</a>.</p>
+      <div class="tool-box">
+        <label for="dream-text">Dream (manifest content)</label>
+        <textarea id="dream-text" placeholder="I am in a house I half-recognize…"></textarea>
+        <label for="dream-feel">Affect on waking, and in the dream</label>
+        <input id="dream-feel" type="text" placeholder="anxiety, relief, shame…" />
+        <label for="dream-day">Day residue — what happened yesterday that echoes?</label>
+        <input id="dream-day" type="text" />
+        <p style="margin-top:1rem"><button class="btn btn-solid" type="button" onclick="saveDream()">Generate working notes</button></p>
+        <div id="dream-result" class="result"></div>
+      </div>
+
+      <h2>2. Word-association exercise (after Jung)</h2>
+      <p>Answer with the first word that comes. Do not improve it. In the clinic Jung timed the pause; here, simply notice hesitation.</p>
+      <div class="tool-box" id="wa-box">
+        <div class="assoc-row"><span class="cue">mother</span><input id="wa-mother" type="text" /></div>
+        <div class="assoc-row"><span class="cue">father</span><input id="wa-father" type="text" /></div>
+        <div class="assoc-row"><span class="cue">death</span><input id="wa-death" type="text" /></div>
+        <div class="assoc-row"><span class="cue">water</span><input id="wa-water" type="text" /></div>
+        <div class="assoc-row"><span class="cue">house</span><input id="wa-house" type="text" /></div>
+        <div class="assoc-row"><span class="cue">child</span><input id="wa-child" type="text" /></div>
+        <div class="assoc-row"><span class="cue">dark</span><input id="wa-dark" type="text" /></div>
+        <div class="assoc-row"><span class="cue">gold</span><input id="wa-gold" type="text" /></div>
+        <div class="assoc-row"><span class="cue">snake</span><input id="wa-snake" type="text" /></div>
+        <div class="assoc-row"><span class="cue">journey</span><input id="wa-journey" type="text" /></div>
+        <div class="assoc-row"><span class="cue">blood</span><input id="wa-blood" type="text" /></div>
+        <div class="assoc-row"><span class="cue">door</span><input id="wa-door" type="text" /></div>
+        <p style="margin-top:1rem"><button class="btn btn-solid" type="button" onclick="runWordAssoc()">Record session</button></p>
+        <div id="wa-result" class="result"></div>
+      </div>
+
+      <h2>3. Defense-mechanism reflection</h2>
+      <p>Check any statement that felt true more than once this month. Labels follow the ego-psychological vocabulary that grew from Freud and Anna Freud.</p>
+      <div class="tool-box">
+        <p><label><input type="checkbox" data-def="repression" /> I often cannot remember stretches of an argument or a childhood scene that others recall clearly.</label></p>
+        <p><label><input type="checkbox" data-def="projection" /> I am sure I know what someone else secretly feels about me, with little evidence.</label></p>
+        <p><label><input type="checkbox" data-def="reaction" /> I preach a virtue most loudly in the area I privately struggle with.</label></p>
+        <p><label><input type="checkbox" data-def="sublimation" /> I turn agitation into work, art, or sport until the original feeling is almost unrecognizable.</label></p>
+        <p><label><input type="checkbox" data-def="denial" /> I have been told I minimize events that were obviously serious.</label></p>
+        <p><label><input type="checkbox" data-def="intellectual" /> I explain my feelings so thoroughly that I no longer feel them.</label></p>
+        <p><label><input type="checkbox" data-def="projection" /> Qualities I despise in others are qualities I cannot stand to see in myself.</label></p>
+        <p><label><input type="checkbox" data-def="repression" /> A joke or slip of the tongue revealed something I had just denied.</label></p>
+        <p style="margin-top:1rem"><button class="btn btn-solid" type="button" onclick="scoreDefenses()">Reflect</button></p>
+        <div id="def-result" class="result"></div>
+      </div>
+
+      <h2>4. Psychological-types sketch (Jung 1921, not MBTI)</h2>
+      <p>Move each slider toward the pole that feels more like your habitual stance. This is a teaching prompt based on <em>Psychological Types</em>, not the Myers–Briggs Type Indicator.</p>
+      <div class="tool-box">
+        <label>Attitude — introversion (0) to extraversion (10)</label>
+        <input id="t-e" type="range" min="0" max="10" value="5" />
+        <input id="t-i" type="hidden" value="5" />
+        <label>Perceiving function — sensation (0) to intuition (10)</label>
+        <input id="t-n" type="range" min="0" max="10" value="5" />
+        <input id="t-s" type="hidden" value="5" />
+        <label>Judging function — feeling (0) to thinking (10)</label>
+        <input id="t-t" type="range" min="0" max="10" value="5" />
+        <input id="t-f" type="hidden" value="5" />
+        <p style="margin-top:1rem"><button class="btn btn-solid" type="button" onclick="
+          document.getElementById('t-i').value = 10 - document.getElementById('t-e').value;
+          document.getElementById('t-s').value = 10 - document.getElementById('t-n').value;
+          document.getElementById('t-f').value = 10 - document.getElementById('t-t').value;
+          scoreTypes();
+        ">Sketch type</button></p>
+        <div id="type-result" class="result"></div>
+      </div>
+    </div>
+  </section>
+  <footer id="site-footer"></footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
